@@ -3,13 +3,13 @@
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
 import { useParams } from 'next/navigation';
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function CategoryPage() {
   const params = useParams();
   const category = params.category as string;
   const [sortBy, setSortBy] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory] = useState('all');
   
   const categoryProducts = useMemo(() => {
     return products.filter(

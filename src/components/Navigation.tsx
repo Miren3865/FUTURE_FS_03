@@ -166,7 +166,7 @@ const Navigation = () => {
             className="text-gray-700 hover:text-black block px-3 py-2 text-base font-medium relative"
             onClick={() => setIsOpen(false)}
           >
-             Cart ({totalItems})
+            Cart ({totalItems})
           </Link>
 
         </div>

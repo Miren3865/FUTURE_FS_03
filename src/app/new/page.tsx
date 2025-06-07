@@ -2,6 +2,8 @@
 
 import ProductCard from '@/components/ProductCard';
 import { products } from '@/data/products';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function NewPage() {
@@ -31,10 +33,12 @@ export default function NewPage() {
         <div className="relative h-[400px] mb-12 rounded-xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10" />
           <div className="absolute inset-0">
-            <img
+            <Image
               src="/hero-bg.jpg"
               alt="New Collection"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              priority
             />
           </div>
           <div className="relative z-20 h-full flex items-center px-8">
@@ -43,9 +47,11 @@ export default function NewPage() {
               <p className="text-xl mb-6">
                 Discover our latest collection of innovative designs and cutting-edge technology.
               </p>
-              <button className="bg-white text-black px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors">
-                Shop Now
-              </button>
+              <Link href="/">
+                <button className="bg-white text-black px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors">
+                  Shop Now
+                </button>
+              </Link>
             </div>
           </div>
         </div>

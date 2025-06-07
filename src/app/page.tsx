@@ -30,7 +30,7 @@ export default function Home() {
             JUST DO IT
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
-            Experience the future of sport with Nike's latest innovations
+            Experience the future of sport with Nike&apos;s latest innovations
           </p>
           <motion.button
             whileHover={{ scale: 1.05 }}

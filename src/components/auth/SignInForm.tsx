@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { FirebaseError } from 'firebase/app';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -22,14 +23,15 @@ export default function SignInForm() {
     try {
       await signIn(email, password);
       router.push('/');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Sign in error:', error);
-      if (error.code === 'auth/invalid-credential') {
+      const firebaseError = error as FirebaseError;
+      if (firebaseError.code === 'auth/invalid-credential') {
         setError('Invalid email or password');
-      } else if (error.code === 'auth/too-many-requests') {
+      } else if (firebaseError.code === 'auth/too-many-requests') {
         setError('Too many failed attempts. Please try again later');
       } else {
-        setError(error.message || 'Failed to sign in');
+        setError(firebaseError.message || 'Failed to sign in');
       }
     } finally {
       setLoading(false);
@@ -117,7 +119,7 @@ export default function SignInForm() {
 
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-600">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Link href="/signup" className="text-black font-semibold hover:underline transition-colors duration-200">
                   Sign up
                 </Link>
@@ -128,4 +130,4 @@ export default function SignInForm() {
       </motion.div>
     </div>
   );
-} 
+}

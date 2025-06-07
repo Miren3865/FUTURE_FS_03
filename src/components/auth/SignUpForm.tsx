@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '@/contexts/AuthContext';
+import { FirebaseError } from 'firebase/app';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -22,16 +23,17 @@ export default function SignUpForm() {
     try {
       await signUp(email, password);
       router.push('/');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Sign up error:', error);
-      if (error.code === 'auth/email-already-in-use') {
+      const firebaseError = error as FirebaseError;
+      if (firebaseError.code === 'auth/email-already-in-use') {
         setError('An account with this email already exists');
-      } else if (error.code === 'auth/weak-password') {
+      } else if (firebaseError.code === 'auth/weak-password') {
         setError('Password should be at least 6 characters');
-      } else if (error.code === 'auth/invalid-email') {
+      } else if (firebaseError.code === 'auth/invalid-email') {
         setError('Invalid email address');
       } else {
-        setError(error.message || 'Failed to create an account');
+        setError(firebaseError.message || 'Failed to create an account');
       }
     } finally {
       setLoading(false);
@@ -132,4 +134,4 @@ export default function SignUpForm() {
       </motion.div>
     </div>
   );
-} 
+}
